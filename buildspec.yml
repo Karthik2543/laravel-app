@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.1
+    commands:
+      - echo "Installing PHP and Composer dependencies..."
+      - composer install --no-dev --optimize-autoloader
+  pre_build:
+    commands:
+      - echo "Preparing Laravel application..."
+      - php artisan config:clear
+      - php artisan config:cache
+      - php artisan route:cache
+  build:
+    commands:
+      - echo "Build completed"
+  post_build:
+    commands:
+      - echo "Deploying to Elastic Beanstalk..."
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
