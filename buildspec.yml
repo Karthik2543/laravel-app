@@ -5,20 +5,20 @@ phases:
     runtime-versions:
       php: 8.1
     commands:
-      - echo "Installing Composer dependencies..."
+      - echo "Installing dependencies..."
       - composer install --no-dev --optimize-autoloader
+
   pre_build:
     commands:
-      - echo "Setting permissions..."
-      - chmod -R 775 storage bootstrap/cache
-      - echo "Caching Laravel configuration..."
-      - php artisan config:cache || true
-      - php artisan route:cache || true
-      - php artisan view:cache || true
+      - echo "Running Laravel pre-build tasks..."
+      - php artisan config:cache
+      - php artisan route:cache
+
   build:
     commands:
-      - echo "Zipping source code for deployment..."
-      - zip -r ../laravel-app.zip . -x "*.git*" "tests/*"
+      - echo "Build phase - no action needed"
+
 artifacts:
   files:
-    - ../laravel-app.zip
+    - '**/*'
+  discard-paths: no
