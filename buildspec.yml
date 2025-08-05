@@ -5,21 +5,17 @@ phases:
     runtime-versions:
       php: 8.1
     commands:
-      - echo "Installing Composer dependencies..."
-      - composer install --no-dev --optimize-autoloader
+      - echo Installing Composer dependencies...
+      - curl -sS https://getcomposer.org/installer | php
+      - php composer.phar install --no-dev --optimize-autoloader
 
   pre_build:
     commands:
-      - echo "Caching Laravel config..."
+      - echo "Generating Laravel config cache..."
       - php artisan config:cache
       - php artisan route:cache
-
-  build:
-    commands:
-      - echo "Build phase completed"
 
 artifacts:
   files:
     - '**/*'
-  discard-paths: no
 
